@@ -81,9 +81,14 @@ if __name__ == "__main__":
             json_output = json.loads(
                 exec_cmd('rbd lock list {}/img{} --format=json'
                          .format(parameters.rep_pool['val']['pool0'], iterator)))
-            [exec_cmd('rbd lock remove {}/img{} {} {}'.
-             format(parameters.rep_pool['val']['pool0'], iterator, lock['id'], lock['locker']))
-             for lock in json_output]
+            if cli.ceph_version == 3:
+                [exec_cmd('rbd lock remove {}/img{} {} {}'
+                          .format(parameters.rep_pool['val']['pool0'], iterator, key, val['locker']))
+                 for key, val in json_output.iteritems()]
+            else:
+                [exec_cmd('rbd lock remove {}/img{} {} {}'
+                          .format(parameters.rep_pool['val']['pool0'], iterator, lock['id'], lock['locker']))
+                 for lock in json_output]
 
     # Mapping Images to block-device
     iterator += 1
