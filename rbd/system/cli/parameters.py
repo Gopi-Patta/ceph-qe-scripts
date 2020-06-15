@@ -11,6 +11,7 @@ data_pool = {'arg': '--data-pool', 'val': {None: None}}
 
 image_format = {'arg': '--image-format',
                 'val': {None: None,
+                        'image-format 1': '1',
                         'image-format 2': '2'}}
 
 image_size = {'arg': '-s',
